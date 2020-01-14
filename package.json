@@ -1,0 +1,26 @@
+{
+  "name": "loan-app-backend",
+  "version": "1.0.0",
+  "description": "a simple loan manager app",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/princeadeyeye/loan-app-backend.git"
+  },
+  "keywords": [
+    "loan",
+    "app",
+    "\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[Cnodejs",
+    "express",
+    "manager"
+  ],
+  "author": "adeyeye muiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/princeadeyeye/loan-app-backend/issues"
+  },
+  "homepage": "https://github.com/princeadeyeye/loan-app-backend#readme"
+}
