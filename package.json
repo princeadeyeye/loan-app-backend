@@ -4,7 +4,8 @@
   "description": "a simple loan manager app",
   "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,7 @@
   "keywords": [
     "loan",
     "app",
-    "\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[Cnodejs",
+    "nodejs",
     "express",
     "manager"
   ],
@@ -22,5 +23,13 @@
   "bugs": {
     "url": "https://github.com/princeadeyeye/loan-app-backend/issues"
   },
-  "homepage": "https://github.com/princeadeyeye/loan-app-backend#readme"
+  "homepage": "https://github.com/princeadeyeye/loan-app-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "pg": "^7.17.1"
+  }
 }
