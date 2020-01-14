@@ -28,8 +28,8 @@ const jwt = require ('jsonwebtoken')
 
     const createQuery = `INSERT INTO
       users(
-       first_name, last_name , email, password, jobRole, department, address )
-        VALUES($1, $2, $3, $4, $5, $6, $7)
+       first_name, last_name , email, password, role )
+        VALUES($1, $2, $3, $4, $5)
         returning *`;
         const values = [
           req.body.firstName,

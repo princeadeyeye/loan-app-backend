@@ -11,15 +11,15 @@ async function createLoan (req, res) {
         lenderid,  
         createdOn       
         )
-      VALUES($1, $2, $3, $4)
+      VALUES($1, $2, $3, $4, $5, $6)
       returning *`;
     const values = [
       req.body.amount,
       req.body.status,
-      re.body.description,
-      req.body.userid,
+      req.body.description,
+      req.body.userid,        
       req.body.lenderid,
-      moment(new Date())
+      new Date()
     ];
 
     try {
@@ -28,16 +28,16 @@ async function createLoan (req, res) {
                   .json({
                     "status": "success",
                     "data": {
-                    "message": "Article successfully created",
+                    "message": "Loan successfully created",
                     "loanId": rows[0].loanid,
-                    "createdOn": rows[0].createdOn
+                    "createdOn": rows[0].createdon
                     }
                     });
     } catch(error) {
       return res.status(400)
                     .json({ 
                       "status": "error",
-                      "error": "Unable to create articles"
+                      "error": "Unable to create loans"
                   });
               }
            }
