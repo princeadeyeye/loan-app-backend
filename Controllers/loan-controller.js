@@ -1,21 +1,25 @@
 const pool = require ('../DB/db-query');
 
-async function createLender (req, res) {
+async function createLoan (req, res) {
     const createQuery = `
     INSERT INTO
-      lenders(
-        first_name, 
-        last_name,
-        email,
-        userid  
+      loans(
+        amount, 
+        status,
+        description,     
+        userid,
+        lenderid,  
+        createdOn       
         )
       VALUES($1, $2, $3, $4)
       returning *`;
     const values = [
-      req.body.firstName,
-      req.body.lastName,
-      req.body.email,
+      req.body.amount,
+      req.body.status,
+      re.body.description,
       req.body.userid,
+      req.body.lenderid,
+      moment(new Date())
     ];
 
     try {
@@ -24,30 +28,30 @@ async function createLender (req, res) {
                   .json({
                     "status": "success",
                     "data": {
-                    "message": "Lender successfully created",
-                    "lenderId": rows[0].lenderid
+                    "message": "Article successfully created",
+                    "loanId": rows[0].loanid,
+                    "createdOn": rows[0].createdOn
                     }
                     });
     } catch(error) {
       return res.status(400)
                     .json({ 
                       "status": "error",
-                      "error": "Unable to create lender"
+                      "error": "Unable to create articles"
                   });
               }
            }
 
 
-
-  async function listUsers(req, res) {
-    const usersQ= 'SELECT * FROM users ORDER BY userid ASC'; 
+  async function listLoans(req, res) {
+    const usersQ= 'SELECT * FROM loans ORDER BY loanid ASC'; 
     try {
       const { rows } = await pool.query(usersQ);
       if (!rows) {
         return res.status(404)
                         .json({
                       "status": "error",
-                        "error": "Users not found"
+                        "error": "Loans not found"
                   });
       }
       rows.password = undefined
@@ -60,22 +64,22 @@ async function createLender (req, res) {
       return res.status(400)
                     .json({ 
                       "status": "error",
-                      "error": "Unable to get users"
+                      "error": "Unable to get loans"
                   });
     }
   }
 
 
 
-  async function getUser(req, res) {
-    const userQ = `SELECT * FROM users WHERE userid = $1`;
+  async function getLoan(req, res) {
+    const userQ = `SELECT * FROM loans WHERE loanid = $1`;
     try {
       const { rows } = await pool.query(userQ, [req.params.id]);
       if (!rows) {
         return res.status(404)
                         .json({
                       "status": "error",
-                        "error": "User not found"
+                        "error": "Loan not found"
                   });
       }
       rows[0].password = undefined;
@@ -83,37 +87,36 @@ async function createLender (req, res) {
                     .json({
                       "status": "success",
                       "data": {
-                        "userId": rows[0].userid,
-                        "firstName": rows[0].first_name,
-                        "lastName": rows[0].last_name,
-                        "email": rows[0].email,
-                        "jobRole": rows[0].role
+                        "loanId": rows[0].loanid,
+                        "amount": rows[0].amount,
+                        "status": rows[0].status,
+                        "description": rows[0].description,
+                        "lenderId": rows[0].lenderid
                       }
                     });
     } catch(error) {
       return res.status(400)
                     .json({ 
                       "status": "error",
-                      "error": "Unable to get User"
+                      "error": "Unable to get Loan"
                   });
     }
   }
 
 
 
-   async function updateUser(req, res) {
-    const findOneQuery = 'SELECT * FROM users WHERE userid=$1';
-    const updateOneQuery =`UPDATE users
-      SET first_name=$1, last_name=$2, email=$3, password=$4,
-      role=$5
-      WHERE userid=$6 returning *`;
+   async function updateLoan(req, res) {
+    const findOneQuery = 'SELECT * FROM loans WHERE loanid=$1';
+    const updateOneQuery =`UPDATE loans
+      SET amount=$1, status=$2, description=$3
+      WHERE loanid=$4 returning *`;
     try {
       const { rows } = await pool.query(findOneQuery, [req.params.id]);
       if(!rows[0]) {
         return res.status(404)
                       .json({
                       "status": "error",
-                        "error": "User not found"
+                        "error": "Loan not found"
                     });
       }
         let profile = rows;
@@ -126,11 +129,9 @@ async function createLender (req, res) {
                         })
       }
        const values = [
-          req.body.firstName || rows[0].firstName,
-          req.body.lastName || rows[0].lastName,
-          req.body.email || rows[0].email,
-          req.body.password || rows[0].password,
-          req.body.role || rows[0].role,
+          req.body.amount || rows[0].amount,
+          req.body.status || rows[0].status,
+          req.body.description || rows[0].description,
           req.params.id
     ];
       const response = await pool.query(updateOneQuery, values);
@@ -138,7 +139,7 @@ async function createLender (req, res) {
                 .json({
                   "status": "success",
                   "data": {
-                      "message": "User successfully updated",
+                      "message": "Loan successfully updated",
                   }
                 });
     } catch(err) {
@@ -151,15 +152,15 @@ async function createLender (req, res) {
   }
 
 
-async function deleteUser(req, res, next) {
-    const deleteQuery = `DELETE FROM users WHERE userid=$1 RETURNING *`;
+async function deleteLoan(req, res, next) {
+    const deleteQuery = `DELETE FROM loans WHERE loanid=$1 RETURNING *`;
     try{
         const { rows } = await pool.query(deleteQuery, [req.params.id]);
           if(!rows[0]) {
             return res.status(400)
                         .json({
                           "status": "error",
-                          "error": "User not found"
+                          "error": "Loan not found"
                   });
           }
             let profile = rows;
@@ -175,17 +176,23 @@ async function deleteUser(req, res, next) {
                     .send({
                       "status": "success",
                       "data": {
-                          "message": "User Successfully deleted"
+                          "message": "Loan Successfully deleted"
                       }
                     })
       } catch(error) {
       return res.status(404)
                     .json({ 
                       "status": "error",
-                      "error": "Unable to delete User"
+                      "error": "Unable to delete Loan"
                   });
     }
   }
 
 
-  module.exports = {createLender, listUsers, getUser, updateUser, deleteUser }
+  module.exports = { 
+         createLoan,
+          listLoans,
+          updateLoan,
+          deleteLoan,
+          getLoan
+        }
