@@ -4,9 +4,9 @@
   "description": "a simple loan manager app",
   "main": "server.js",
   "scripts": {
-    "start": "node /server",
+    "start": "node ./server/server",
     "test": "npm test",
-    "nodemon": "nodemon /server"
+    "nodemon": "nodemon ./server/server"
   },
   "repository": {
     "type": "git",
