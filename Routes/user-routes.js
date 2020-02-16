@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // create a lender
-router.post('/api/v1/users/', userCtrl.createLender)
+router.post('/api/v1/users/', authCtrl.requireSignin, userCtrl.createLender)
 
 //listUsers articles
 router.get('/api/v1/users/', userCtrl.listUsers)

@@ -11,8 +11,7 @@ router.post('/api/v1/auth/create-user/', authCtrl.createUser)
 // user signin
 router.post('/api/v1/auth/signin', authCtrl.signin)
 
-// user sign out
-// router.get('auth/signout', authCtrl.signout)*/
+
 
 
 

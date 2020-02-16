@@ -69,6 +69,7 @@ const jwt = require ('jsonwebtoken')
 
   async function signin(req, res) {
     if (!req.body.email || !req.body.password) {
+      console.log(req.body)
       return res.status(400)
                   .json({
                      "status": "error",
@@ -100,15 +101,12 @@ const jwt = require ('jsonwebtoken')
                         });
         }
         const id = rows[0].userid
+        const firstName = rows[0].first_name
+        const lastName =  rows[0].last_name
+        console.log(firstName, lastName)
         const token = Helper.generateToken(id);
         return res.status(200)
-                       .json({
-                          "status": "success",
-                          "data": {
-                          "token": token,
-                          "userId": id
-                    }
-                 });
+                       .json({"token": token,"userId": id,"firstName": firstName,"lastName": lastName});
     } catch(error) {
       return res.status(400)
                     .json({ 
