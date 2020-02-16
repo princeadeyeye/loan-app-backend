@@ -1,4 +1,8 @@
 const pool = require ('../DB/db-query');
+const Helper = require ('../Helper');
+const expressJwt = require('express-jwt')
+const jwt = require ('jsonwebtoken')
+
 
 async function createLender (req, res) {
     const createQuery = `
