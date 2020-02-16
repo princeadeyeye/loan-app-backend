@@ -8,10 +8,8 @@
     "yarn": "1.21.1"
   },
   "scripts": {
-    "dev": "node server.js",
-    "build": "next build",
-    "postinstall": "npm run build",
-    "start": "NODE_ENV=production node server.js",
+    "postinstall": "yarn run build",
+    "start": "node server.js",
     "nodemon": "nodemon server"
   },
   "repository": {
