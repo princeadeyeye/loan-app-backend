@@ -1,1 +1,1 @@
-web: yarn run build && yarn start -- --port $PORT
+web: yarn run build && yarn start
