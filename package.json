@@ -4,7 +4,6 @@
   "description": "a simple loan manager app",
   "main": "server.js",
   "engines": {
-    "node": "10.16.0",
     "yarn": "1.21.1"
   },
   "scripts": {
