@@ -8,7 +8,7 @@
     "yarn": "1.21.1"
   },
   "scripts": {
-    "postinstall": "yarn run build",
+    "postinstall": "yarn start",
     "start": "node server.js",
     "nodemon": "nodemon server"
   },
